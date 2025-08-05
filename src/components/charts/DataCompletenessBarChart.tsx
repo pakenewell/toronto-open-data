@@ -53,85 +53,86 @@ export function DataCompletenessBarChart({
 
     return {
       tooltip: {
-        backgroundColor: resolvedTheme === 'dark' ? 'rgba(26,32,44,0.95)' : 'rgba(255,255,255,0.95)',
-        borderColor: resolvedTheme === 'dark' ? '#4A5568' : '#E2E8F0',
-        textStyle: { color: resolvedTheme === 'dark' ? '#E2E8F0' : '#2D3748' },
-        formatter: (params: any) => {
-          const data = sortedData[params.dataIndex];
-          return `
-            <div class="font-semibold mb-2">${data.field}</div>
-            <div class="space-y-1">
-              <div>Completeness: <span class="font-medium">${data.completeness.toFixed(1)}%</span></div>
-              <div>Complete Records: <span class="font-medium">${data.completeRecords.toLocaleString()}</span></div>
-              <div>Missing Records: <span class="font-medium">${data.missingRecords.toLocaleString()}</span></div>
-              <div>Total Records: <span class="font-medium">${data.totalRecords.toLocaleString()}</span></div>
-              ${data.description ? `<div class="mt-2 text-sm text-gray-600">${data.description}</div>` : ''}
-            </div>
-          `;
-        }
+      backgroundColor: resolvedTheme === 'dark' ? 'rgba(26,32,44,0.95)' : 'rgba(255,255,255,0.95)',
+      borderColor: resolvedTheme === 'dark' ? '#4A5568' : '#E2E8F0',
+      textStyle: { color: resolvedTheme === 'dark' ? '#E2E8F0' : '#2D3748' },
+      formatter: (params: any) => {
+        const data = sortedData[params.dataIndex];
+        return `
+        <div class="font-semibold mb-2">${data.field}</div>
+        <div class="space-y-1">
+          <div>Completeness: <span class="font-medium">${data.completeness.toFixed(1)}%</span></div>
+          <div>Complete Records: <span class="font-medium">${data.completeRecords.toLocaleString()}</span></div>
+          <div>Missing Records: <span class="font-medium">${data.missingRecords.toLocaleString()}</span></div>
+          <div>Total Records: <span class="font-medium">${data.totalRecords.toLocaleString()}</span></div>
+          ${data.description ? `<div class="mt-2 text-sm text-gray-600">${data.description}</div>` : ''}
+        </div>
+        `;
+      }
       },
       grid: {
-        top: 10,
-        right: 30,
-        bottom: 40,
-        left: 140,
-        containLabel: true
+      top: 10,
+      right: 30,
+      bottom: 40,
+      left: 30,
+      containLabel: true
       },
       xAxis: {
-        type: 'value',
-        min: 0,
-        max: 100,
-        axisLabel: {
-          formatter: '{value}%',
-          color: resolvedTheme === 'dark' ? '#e2e8f0' : '#374151'
-        },
-        axisLine: {
-          lineStyle: {
-            color: resolvedTheme === 'dark' ? '#4b5563' : '#d1d5db'
-          }
-        },
-        splitLine: {
-          lineStyle: {
-            color: resolvedTheme === 'dark' ? '#374151' : '#e5e7eb'
-          }
+      type: 'value',
+      min: 0,
+      max: 100,
+      axisLabel: {
+        formatter: '{value}%',
+        fontsize: 14,
+        color: resolvedTheme === 'dark' ? '#e2e8f0' : '#374151'
+      },
+      axisLine: {
+        lineStyle: {
+        color: resolvedTheme === 'dark' ? '#4b5563' : '#d1d5db'
         }
+      },
+      splitLine: {
+        lineStyle: {
+        color: resolvedTheme === 'dark' ? '#374151' : '#e5e7eb'
+        }
+      }
       },
       yAxis: {
-        type: 'category',
-        data: fieldNames,
-        axisLabel: {
-          color: resolvedTheme === 'dark' ? '#e2e8f0' : '#374151',
-          fontSize: 12,
-          formatter: (value: string) => {
-            // Format field names to be more readable
-            return value
-              .replace(/_/g, ' ')
-              .replace(/\b\w/g, (char: string) => char.toUpperCase());
-          }
-        },
-        axisLine: {
-          lineStyle: {
-            color: resolvedTheme === 'dark' ? '#4b5563' : '#d1d5db'
-          }
+      type: 'category',
+      data: fieldNames,
+      axisLabel: {
+        color: resolvedTheme === 'dark' ? '#e2e8f0' : '#374151',
+        fontSize: 14,
+        formatter: (value: string) => {
+        // Format field names to be more readable
+        return value
+          .replace(/_/g, ' ')
+          .replace(/\b\w/g, (char: string) => char.toUpperCase());
         }
       },
-      series: [{
-        type: 'bar',
-        data: completenessValues.map((value, index) => ({
-          value,
-          itemStyle: {
-            color: itemColors[index]
-          }
-        })),
-        barWidth: '70%',
-        label: {
-          show: true,
-          position: 'right',
-          formatter: '{c}%',
-          color: resolvedTheme === 'dark' ? '#e2e8f0' : '#374151',
-          fontSize: 11,
-          distance: 5
+      axisLine: {
+        lineStyle: {
+        color: resolvedTheme === 'dark' ? '#4b5563' : '#d1d5db'
         }
+      }
+      },
+      series: [{
+      type: 'bar',
+      data: completenessValues.map((value, index) => ({
+        value,
+        itemStyle: {
+        color: itemColors[index]
+        }
+      })),
+      barWidth: '70%',
+      label: {
+        show: true,
+        position: 'insideRight',
+        formatter: (params: any) => `${Number(params.value).toFixed(2)}%`,
+        color: resolvedTheme === 'dark' ? '#e2e8f0' : '#e2e8f0',
+        fontSize: 14,
+        distance: 5
+      }
       }]
     };
   }, [fieldCompleteness, resolvedTheme]);
@@ -150,8 +151,8 @@ export function DataCompletenessBarChart({
   return (
     <div className={`w-full ${className}`}>
       <div className="mb-6">
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+        <h3 className="text-2xl font-semibold mb-3">{title}</h3>
+        <div className="flex flex-wrap items-center gap-3 text-md text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
             <span>≥90% Excellent</span>
@@ -191,31 +192,31 @@ export function DataCompletenessBarChart({
           <div className="text-2xl font-semibold text-green-600 dark:text-green-400">
             {fieldCompleteness.filter(f => f.completeness >= 90).length}
           </div>
-          <div className="text-sm text-green-700 dark:text-green-300">Excellent</div>
+          <div className="text-md text-green-700 dark:text-green-300">Excellent</div>
         </div>
         <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <div className="text-2xl font-semibold text-blue-600 dark:text-blue-400">
             {fieldCompleteness.filter(f => f.completeness >= 80 && f.completeness < 90).length}
           </div>
-          <div className="text-sm text-blue-700 dark:text-blue-300">Good</div>
+          <div className="text-md text-blue-700 dark:text-blue-300">Good</div>
         </div>
         <div className="text-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
           <div className="text-2xl font-semibold text-yellow-600 dark:text-yellow-400">
             {fieldCompleteness.filter(f => f.completeness >= 70 && f.completeness < 80).length}
           </div>
-          <div className="text-sm text-yellow-700 dark:text-yellow-300">Fair</div>
+          <div className="text-md text-yellow-700 dark:text-yellow-300">Fair</div>
         </div>
         <div className="text-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
           <div className="text-2xl font-semibold text-orange-600 dark:text-orange-400">
             {fieldCompleteness.filter(f => f.completeness >= 60 && f.completeness < 70).length}
           </div>
-          <div className="text-sm text-orange-700 dark:text-orange-300">Poor</div>
+          <div className="text-md text-orange-700 dark:text-orange-300">Poor</div>
         </div>
         <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
           <div className="text-2xl font-semibold text-red-600 dark:text-red-400">
             {fieldCompleteness.filter(f => f.completeness < 60).length}
           </div>
-          <div className="text-sm text-red-700 dark:text-red-300">Critical</div>
+          <div className="text-md text-red-700 dark:text-red-300">Critical</div>
         </div>
       </div>
     </div>

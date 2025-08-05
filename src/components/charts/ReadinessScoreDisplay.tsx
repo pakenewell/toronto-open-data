@@ -322,41 +322,41 @@ export function ReadinessScoreDisplay({
 
       {/* Readiness Scale Guide */}
       <div className="bg-muted p-4 rounded-lg">
-        <h4 className="font-medium mb-3">Readiness Scale Guide</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-sm">
+        <h4 className="font-medium text-xl mb-3">Readiness Scale Guide</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-md">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded"></div>
             <div>
               <div className="font-medium text-green-700 dark:text-green-300">90-100%</div>
-              <div className="text-xs text-muted-foreground">Excellent</div>
+              <div className="text-md text-muted-foreground">Excellent</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-blue-500 rounded"></div>
             <div>
               <div className="font-medium text-blue-700 dark:text-blue-300">80-89%</div>
-              <div className="text-xs text-muted-foreground">Good</div>
+              <div className="text-md text-muted-foreground">Good</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-yellow-500 rounded"></div>
             <div>
               <div className="font-medium text-yellow-700 dark:text-yellow-300">70-79%</div>
-              <div className="text-xs text-muted-foreground">Fair</div>
+              <div className="text-md text-muted-foreground">Fair</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-orange-500 rounded"></div>
             <div>
               <div className="font-medium text-orange-700 dark:text-orange-300">60-69%</div>
-              <div className="text-xs text-muted-foreground">Poor</div>
+              <div className="text-md text-muted-foreground">Poor</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-red-500 rounded"></div>
             <div>
               <div className="font-medium text-red-700 dark:text-red-300">&lt;60%</div>
-              <div className="text-xs text-muted-foreground">Critical</div>
+              <div className="text-md text-muted-foreground">Critical</div>
             </div>
           </div>
         </div>

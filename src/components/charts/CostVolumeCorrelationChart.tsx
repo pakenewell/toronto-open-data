@@ -96,7 +96,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
         left: 'left',
         textStyle: {
           color: themeColors.foreground,
-          fontSize: 16,
+          fontSize: 24,
           fontWeight: 600,
         },
       },
@@ -154,6 +154,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
         axisLabel: { 
           color: themeColors.muted,
           rotate: 45,
+          fontSize: 12,
         },
         axisLine: {
           lineStyle: { color: themeColors.border },
@@ -171,6 +172,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
           axisLabel: {
             formatter: (value: number) => formatCurrency(value, { compact: true }),
             color: themeColors.muted,
+            fontSize: 14,
           },
           axisLine: {
             lineStyle: { color: themeColors.border },
@@ -193,6 +195,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
           axisLabel: {
             formatter: (value: number) => formatNumber(value),
             color: themeColors.muted,
+            fontSize: 14,
           },
           axisLine: {
             lineStyle: { color: themeColors.border },
@@ -251,7 +254,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
     return (
       <div className="municipal-card">
         <div className="h-[400px] animate-pulse bg-muted rounded flex items-center justify-center">
-          <div className="text-sm text-muted-foreground">Loading correlation analysis...</div>
+          <div className="text-sm text-muted-foreground">Loading analysis...</div>
         </div>
       </div>
     );
@@ -261,7 +264,7 @@ const CostVolumeCorrelationChart: React.FC<CostVolumeCorrelationChartProps> = ({
     return (
       <div className="municipal-card">
         <div className="h-[400px] flex items-center justify-center">
-          <div className="text-muted-foreground">No data available for correlation analysis</div>
+          <div className="text-muted-foreground">No data available for analysis</div>
         </div>
       </div>
     );
