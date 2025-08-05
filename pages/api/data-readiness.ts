@@ -215,17 +215,18 @@ function calculateAccuracy(services: ServiceResult[]): number {
       return;
     }
     
-    // Check service_result validity (PASS/FAIL are valid, UNKNOWN suggests data quality issue)
-    if (service.service_result) {
-      if (service.service_result !== 'PASS' && 
-          service.service_result !== 'FAIL' && 
-          service.service_result !== 'UNKNOWN') {
-        invalidRecords++;
+    // Check service_result validity
+    if (service.service_result !== null && service.service_result !== undefined) {
+      // Valid results are PASS or FAIL
+      if (service.service_result === 'PASS' || service.service_result === 'FAIL') {
+        // Valid result, no penalty
+      } else if (service.service_result === '') {
+        // Empty string suggests missing/unclear data - half penalty
+        invalidRecords += 0.5;
         return;
-      }
-      // Count UNKNOWN as partial accuracy issue (suggests missing/unclear data)
-      if (service.service_result === 'UNKNOWN') {
-        invalidRecords += 0.5; // Half penalty for UNKNOWN values
+      } else {
+        // Any other value is invalid - full penalty
+        invalidRecords++;
         return;
       }
     }
@@ -243,7 +244,7 @@ function calculateConsistency(services: ServiceResult[]): number {
   
   services.forEach(service => {
     // Records with PASS/FAIL should have a division owner
-    if (service.service_result && service.service_result !== 'UNKNOWN' && !service.service_division_owner) {
+    if ((service.service_result === 'PASS' || service.service_result === 'FAIL') && !service.service_division_owner) {
       inconsistentRecords++;
       return;
     }
@@ -256,8 +257,8 @@ function calculateConsistency(services: ServiceResult[]): number {
       }
     }
     
-    // Records with UNKNOWN result shouldn't have high costs (suggests missing data)
-    if (service.service_result === 'UNKNOWN' && service.estimated_cost && service.estimated_cost > 100000) {
+    // Records with empty/missing result shouldn't have high costs (suggests missing data)
+    if ((service.service_result === '' || service.service_result === null) && service.estimated_cost && service.estimated_cost > 100000) {
       inconsistentRecords++;
       return;
     }
@@ -307,8 +308,7 @@ function calculateCompleteness(services: ServiceResult[]): number {
       service.estimated_cost !== undefined &&
       service.ward !== null && 
       service.ward !== undefined &&
-      service.service_result && 
-      service.service_result !== 'UNKNOWN';
+      (service.service_result === 'PASS' || service.service_result === 'FAIL');
     
     if (hasAllRequiredFields) completeRecords++;
   });
@@ -468,14 +468,14 @@ function calculateAuditAlignedDataQuality(services: ServiceResult[]): DataQualit
   return {
     completeness: {
       score: completenessScore,
-      details: `${completenessScore.toFixed(2)}% of records have ALL required fields: division, start date, end date, cost, ward, and valid result (not UNKNOWN)`,
+      details: `${completenessScore.toFixed(2)}% of records have ALL required fields: division, start date, end date, cost, ward, and valid result (not empty)`,
       issues: completenessScore < 70 ? [
-        'Many records have UNKNOWN service results (21.6% of data)',
+        'Many records have empty/missing service results (21.6% of data)',
         'Missing cost data in 18.69% of records',
         'Some records missing dates or ward information'
       ] : [],
       recommendations: completenessScore < 70 ? [
-        'Convert UNKNOWN results to actual PASS/FAIL values',
+        'Convert empty/missing results to actual PASS/FAIL values',
         'Populate all missing cost estimates',
         'Ensure all records have complete date and location data'
       ] : ['Continue efforts to maintain data completeness']
