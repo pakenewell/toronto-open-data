@@ -85,7 +85,7 @@ export function DataReadinessTab({}: DataReadinessTabProps) {
           </div>
 
           {/* Enhanced KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <KPICard
               title="Total Records"
               value={formatNumber(dashboardData.kpiData.totalServices)}
@@ -95,18 +95,12 @@ export function DataReadinessTab({}: DataReadinessTabProps) {
             />
             {enhancedKPIs && (
               <>
-                <KPICard
-                  title="Complete Records"
-                  value={formatNumber(enhancedKPIs.completeRecords)}
-                  isLoading={isLoading}
-                  icon={<CheckCircle className="w-5 h-5 text-green-600" />}
-                  description=""
-                />
+
                 <KPICard
                   title="Data Completeness"
                   value={`${enhancedKPIs.completenessRate.toFixed(1)}%`}
                   isLoading={isLoading}
-                  icon={<XCircle className="w-5 h-5 text-amber-600" />}
+                  icon={<CheckCircle className="w-5 h-5 text-amber-600" />}
                   description=""
                 />
               </>

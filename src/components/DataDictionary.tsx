@@ -62,12 +62,6 @@ export const DataDictionary: React.FC<DataDictionaryProps> = ({ className = '' }
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Records</div>
                 <div className="text-lg font-semibold text-gray-900">{dataDictionary.totalRecords.toLocaleString()}</div>
               </div>
-              <div className="bg-white rounded-lg p-3 shadow-sm">
-                <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Quality Score</div>
-                <div className={`text-lg font-semibold ${getQualityColor(dataDictionary.dataQualityScore)}`}>
-                  {dataDictionary.dataQualityScore}%
-                </div>
-              </div>
             </div>
           </div>
           <div className="ml-6">

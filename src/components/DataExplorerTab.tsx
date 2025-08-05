@@ -251,16 +251,6 @@ export function DataExplorerTab({
             showTrendline={true}
           />
 
-          {/* Highest Expenses List */}
-          <div className="grid grid-cols-1 gap-6">
-            <HighestExpensesList
-              data={dashboardData?.highestExpenses || []}
-              isLoading={isLoading}
-              maxHeight="400px"
-            />
-          </div>
-
-
           {/* Enhanced Division and Ward Analysis */}
           <div className="grid grid-cols-1 gap-6">
             <CostVolumeByDivisionTable
@@ -277,6 +267,16 @@ export function DataExplorerTab({
               />
             )}
 
+          </div>
+
+
+          {/* Highest Expenses List */}
+          <div className="grid grid-cols-1 gap-6">
+            <HighestExpensesList
+              data={dashboardData?.highestExpenses || []}
+              isLoading={isLoading}
+              maxHeight="400px"
+            />
           </div>
         </div>
       )}

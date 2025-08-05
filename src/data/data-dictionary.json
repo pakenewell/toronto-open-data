@@ -226,7 +226,6 @@
   ],
   "usageNotes": [
     "This dataset contains City of Toronto Division X service results from 2000 to 2024",
-    "Data has been assessed for open data readiness with a score of 75.75%",
     "No personally identifiable information (PII) was detected",
     "Cost analysis should account for missing values from Solid Waste Management division"
   ],
