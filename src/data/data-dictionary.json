@@ -1,0 +1,238 @@
+{
+  "title": "Toronto Division X Service Results Data Dictionary",
+  "description": "Comprehensive metadata for the Division X Service Results dataset",
+  "version": "1.0.0",
+  "lastUpdated": "2025-08-03",
+  "dataQualityScore": 75.75,
+  "totalRecords": 19324,
+  "dateRange": {
+    "start": "2000-01-14",
+    "end": "2024-05-15"
+  },
+  "fields": [
+    {
+      "fieldName": "id",
+      "displayName": "Record ID",
+      "dataType": "bigint",
+      "nullable": false,
+      "primaryKey": true,
+      "description": "Unique identifier for each service record",
+      "validValues": "Sequential integers starting from 1",
+      "example": "12345",
+      "dataQuality": {
+        "completeness": 100,
+        "uniqueness": 100,
+        "validity": 100,
+        "notes": "No issues found"
+      },
+      "businessRules": [
+        "Auto-generated sequential ID",
+        "Cannot be modified once created",
+        "Must be unique across all records"
+      ]
+    },
+    {
+      "fieldName": "start_date",
+      "displayName": "Service Start Date",
+      "dataType": "date",
+      "nullable": true,
+      "primaryKey": false,
+      "description": "Date when the service activity began",
+      "validValues": "Valid dates between 1975-01-01 and current date + 1 year",
+      "example": "2023-07-15",
+      "dataQuality": {
+        "completeness": 99.75,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "48 records (0.25%) have missing dates, all associated with invalid ward 66"
+      },
+      "businessRules": [
+        "Must be before or equal to end_date",
+        "Cannot be more than 1 year in the future",
+        "Format: YYYY-MM-DD"
+      ]
+    },
+    {
+      "fieldName": "end_date",
+      "displayName": "Service End Date",
+      "dataType": "date",
+      "nullable": true,
+      "primaryKey": false,
+      "description": "Date when the service activity was completed",
+      "validValues": "Valid dates between 1975-01-01 and current date + 1 year",
+      "example": "2023-08-01",
+      "dataQuality": {
+        "completeness": 99.75,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "48 records (0.25%) have missing dates, all associated with invalid ward 66"
+      },
+      "businessRules": [
+        "Must be after or equal to start_date",
+        "Cannot be in more than 1 year in the future",
+        "Typically within 365 days of start_date"
+      ]
+    },
+    {
+      "fieldName": "service_division_owner",
+      "displayName": "Service Division Owner",
+      "dataType": "text",
+      "nullable": false,
+      "primaryKey": false,
+      "description": "City division responsible for the service",
+      "validValues": [
+        "Transportation Services",
+        "Toronto Water",
+        "Parks, Forestry & Recreation",
+        "Solid Waste Management",
+        "Municipal Licensing & Standards",
+        "Water"
+      ],
+      "example": "Transportation Services",
+      "dataQuality": {
+        "completeness": 100,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "Well-controlled list with only 5/6 unique values"
+      },
+      "businessRules": [
+        "Must be from approved division list"
+      ]
+    },
+    {
+      "fieldName": "service_result",
+      "displayName": "Service Result",
+      "dataType": "text",
+      "nullable": false,
+      "primaryKey": false,
+      "description": "Outcome of the service activity (required field with UNKNOWN for missing values)",
+      "validValues": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "example": "PASS",
+      "dataQuality": {
+        "completeness": 100,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "Required field - null and empty values are treated as UNKNOWN"
+      },
+      "businessRules": [
+        "PASS indicates successful service completion",
+        "FAIL indicates service did not meet standards", 
+        "UNKNOWN used for null, empty, or pending results"
+      ]
+    },
+    {
+      "fieldName": "ward",
+      "displayName": "Ward Number",
+      "dataType": "bigint",
+      "nullable": false,
+      "primaryKey": false,
+      "description": "Toronto electoral ward where service was performed",
+      "validValues": "Integer between 1 and 25 (Toronto's 25 wards)",
+      "example": "12",
+      "dataQuality": {
+        "completeness": 100,
+        "uniqueness": null,
+        "validity": 99.75,
+        "notes": "48 records have invalid ward 66"
+      },
+      "businessRules": [
+        "Must be valid Toronto ward (1-25)",
+        "Corresponds to official City of Toronto ward boundaries",
+        "Critical for geographic analysis and reporting"
+      ],
+      "referenceData": {
+        "source": "City of Toronto Ward Boundaries",
+        "lastUpdated": "2018 (25-ward system)",
+        "note": "Toronto reduced from 47 to 25 wards in 2018"
+      }
+    },
+    {
+      "fieldName": "estimated_cost",
+      "displayName": "Estimated Cost",
+      "dataType": "double precision",
+      "nullable": true,
+      "primaryKey": false,
+      "description": "Estimated or actual cost of the service in Canadian dollars",
+      "validValues": "Positive numbers, typically between $100 and $10,000,000",
+      "example": "45250.00",
+      "dataQuality": {
+        "completeness": 81.31,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "3,612 records missing costs, all from Solid Waste Management division"
+      },
+      "businessRules": [
+        "Must be positive value",
+        "Stored in Canadian dollars (CAD)",
+        "May represent estimated or actual costs",
+        "NULL indicates cost not available or not applicable"
+      ],
+      "statistics": {
+        "min": 111.00,
+        "max": 9717939.00,
+        "mean": 423606.60,
+        "median": 102000.00,
+        "standardDeviation": 1099694.00
+      }
+    },
+    {
+      "fieldName": "notes",
+      "displayName": "Notes",
+      "dataType": "text",
+      "nullable": true,
+      "primaryKey": false,
+      "description": "Additional information or context about the service",
+      "validValues": "Free-form text, typically empty",
+      "example": "",
+      "dataQuality": {
+        "completeness": 100,
+        "uniqueness": null,
+        "validity": 100,
+        "notes": "All records have this field but most are empty strings; no PII detected in samples"
+      },
+      "businessRules": [
+        "Free-form text field",
+        "Should not contain personally identifiable information (PII)"
+      ],
+      "privacyNotes": "Field has been audited for PII - none detected in current dataset"
+    }
+  ],
+  "dataQualityIssues": [
+    {
+      "issue": "Invalid Ward Numbers",
+      "severity": "Medium",
+      "recordsAffected": 48,
+      "description": "48 records have ward number 66, which doesn't exist in Toronto's 25-ward system",
+      "recommendation": "Investigate source data to determine correct ward numbers"
+    },
+    {
+      "issue": "Data Staleness",
+      "severity": "High",
+      "recordsAffected": 19324,
+      "description": "Data is 445 days old (last record from May 2024)",
+      "recommendation": "Establish regular data refresh process"
+    },
+    {
+      "issue": "Missing Cost Data",
+      "severity": "Medium",
+      "recordsAffected": 3612,
+      "description": "18.69% of records lack estimated cost values, all in Solid Waste Management division",
+      "recommendation": "Determine if costs can be imputed or if NULL is appropriate"
+    }
+  ],
+  "usageNotes": [
+    "This dataset contains City of Toronto Division X service results from 2000 to 2024",
+    "Data has been assessed for open data readiness with a score of 75.75%",
+    "No personally identifiable information (PII) was detected",
+    "Cost analysis should account for missing values from Solid Waste Management division"
+  ],
+  "contactInformation": {
+    "dataOwner": "Division X Open Data Team",
+    "lastAuditDate": "2025-08-03",
+    "auditedBy": "Open Data Lead"
+  }
+}
